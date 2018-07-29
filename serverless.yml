@@ -1,0 +1,37 @@
+service: ${file(package.json):name}
+version: ${file(package.json):version}
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+
+# you can overwrite defaults here
+#  stage: dev
+#  region: us-east-1
+
+package:
+  exclude:
+    - .gitignore
+
+functions:
+
+  create_game:
+    handler: game/create.handler
+    events:
+      - http:
+          path: /bahoth/games
+          method: post
+  
+  update_game:
+    handler: game/update.handler
+    events:
+      - http:
+          path: /bahoth/games/{id}
+          method: patch
+
+  get_game:
+    handler: game/get.handler
+    events:
+      - http:
+          path: /bahoth/games/{id}
+          method: get
