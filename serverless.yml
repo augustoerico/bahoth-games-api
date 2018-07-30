@@ -16,21 +16,21 @@ package:
 functions:
 
   create_game:
-    handler: game/create.handler
+    handler: handlers/create.handler
     events:
       - http:
           path: /bahoth/games
           method: post
   
   update_game:
-    handler: game/update.handler
+    handler: handlers/update.handler
     events:
       - http:
           path: /bahoth/games/{id}
           method: patch
 
   get_game:
-    handler: game/get.handler
+    handler: handlers/get.handler
     events:
       - http:
           path: /bahoth/games/{id}
