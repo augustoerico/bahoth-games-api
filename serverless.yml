@@ -4,13 +4,13 @@ version: ${file(package.json):version}
 provider:
   name: aws
   runtime: nodejs8.10
+  stage: ${opt:stage, 'dev'}
   apiGateway:
-    restApiId: eqzw721z07
-    restApiRootResourceId: jlqfdlght5
+    restApiId: ${cf:${self:custom.stack}.RestApiId}
+    restApiRootResourceId: ${cf:${self:custom.stack}.RootResourceId}
 
-# you can overwrite defaults here
-#  stage: dev
-#  region: us-east-1
+custom:
+  stack: bahoth-${self:provider.stage}
 
 package:
   exclude:
