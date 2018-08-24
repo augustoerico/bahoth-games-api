@@ -43,7 +43,7 @@ functions:
               application/xml: '{"body-xml": "$input.body"}'
           response:
             template: $input.path('$.body')
-            statusCode:
+            statusCodes:
               201:
                 pattern: ''
   
