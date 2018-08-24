@@ -5,8 +5,12 @@ version: ${file(package.json):version}
 http-defaults: &http-defaults
   integration: lambda
 
-requests-default: &requests-default
+request-defaults: &request-defaults
   passThrough: NEVER
+
+response-defaults: &response-defaults
+  headers:
+    Content-Type: "application/json"
 
 # Serverless config
 provider:
@@ -34,9 +38,14 @@ functions:
           path: /games
           method: post
           request:
-            <<: *requests-default
+            <<: *request-defaults
             template:
               application/xml: '{"body-xml": "$input.body"}'
+          response:
+            template: $input.path('$.body')
+            statusCode:
+              201:
+                pattern: ''
   
   update:
     handler: handlers/update.handler
