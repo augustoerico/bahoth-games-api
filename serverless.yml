@@ -1,6 +1,14 @@
 service: ${file(package.json):name}
 version: ${file(package.json):version}
 
+# User defined shortcuts
+http-defaults: &http-defaults
+  integration: lambda
+
+requests-default: &requests-default
+  passThrough: NEVER
+
+# Serverless config
 provider:
   name: aws
   runtime: nodejs8.10
@@ -22,13 +30,19 @@ functions:
     handler: handlers/create.handler
     events:
       - http:
+          <<: *http-defaults
           path: /games
           method: post
+          request:
+            <<: *requests-default
+            template:
+              application/xml: '{"body-xml": "$input.body"}'
   
   update:
     handler: handlers/update.handler
     events:
       - http:
+          <<: *http-defaults
           path: /games/{id}
           method: patch
 
